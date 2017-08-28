@@ -6,9 +6,8 @@ import java.net.URLConnection;
 
 public class ItemIDFetch {
 	
-	
 	public static String fetchItem(String itemName) {
-		String url = "http://www.wowhead.com/search?q=" + itemName;
+		String url = "https://www.wowhead.com/search?q=" + itemName;
 		URLConnection con;
 		String result = null;
 		try {
@@ -18,6 +17,7 @@ public class ItemIDFetch {
 			String resultString = con.getURL().toString();
 			if (resultString.contains("item=")) {
 				result = resultString.substring(resultString.indexOf("item=") + 5);
+				//todo: get wow api access
 			}
 			//if the page was not redirected we don't get a proper result
 		} catch (IOException e) {
@@ -35,4 +35,10 @@ public class ItemIDFetch {
 		result = slot +"=" + itemName.replaceAll(" ", "_").toLowerCase() + ",id=" + itemId +",ilevel=" + Integer.toString(iLevel);
 		return result;
 	}
+	
+	public static void main(String[] args) {
+		fetchItem("Convergence of Fates");
+	}
+	
+	//
 }
