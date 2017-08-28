@@ -9,11 +9,12 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import app.ItemIDFetch;
 
 
-public class ItemGUI extends Frame implements ActionListener{
+public class ItemGUI extends Frame implements ActionListener, WindowListener{
 	private static final String[] ITEMSLOTS = {"head", "neck", "shoulder", "back", "chest", "wrist",
 					"hands", "waist", "legs", "feet", "finger1", "finger2", "trinket1", "trinket2"};
 	private Choice slotList;
@@ -52,7 +53,7 @@ public class ItemGUI extends Frame implements ActionListener{
 		
 		outPut = new TextField("", 100);
 		add(outPut);
-		
+		addWindowListener(this);
 		setTitle("Wow Item ID Fetcher");
 		setSize(800, 300);
 		setVisible(true);
@@ -68,9 +69,57 @@ public class ItemGUI extends Frame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		String slot = slotList.getSelectedItem();
 		String itemName = itemInput.getText();
-		int iLevel = Integer.parseInt(iLevelInput.getText());
-		outPut.setText(ItemIDFetch.createSimCraftStringForItem(slot, itemName, iLevel));
+		try {
+			int iLevel = Integer.parseInt(iLevelInput.getText());
+			String result = ItemIDFetch.createSimCraftStringForItem(slot, itemName, iLevel);
+			if (result == null) {
+				outPut.setText("That item couldn't be found");
+			}
+			else {
+				outPut.setText(result);
+			}
+		}
+		catch(NumberFormatException ex) {
+			outPut.setText("Please enter an integer into the item level field");
+		}
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
