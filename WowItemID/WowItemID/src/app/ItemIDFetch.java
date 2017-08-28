@@ -17,7 +17,7 @@ public class ItemIDFetch {
 			String resultString = con.getURL().toString();
 			if (resultString.contains("item=")) {
 				result = resultString.substring(resultString.indexOf("item=") + 5);
-				//todo: get wow api access
+				Item i = Item.getItemFromBnet(result);
 			}
 			//if the page was not redirected we don't get a proper result
 		} catch (IOException e) {
