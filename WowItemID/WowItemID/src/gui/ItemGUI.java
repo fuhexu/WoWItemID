@@ -11,12 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import app.Item;
 import app.ItemIDFetch;
 
 
 public class ItemGUI extends Frame implements ActionListener, WindowListener{
-	private static final String[] ITEMSLOTS = {"head", "neck", "shoulder", "back", "chest", "wrist",
-					"hands", "waist", "legs", "feet", "finger1", "finger2", "trinket1", "trinket2"};
 	private Choice slotList;
 	private TextField itemInput;
 	private Button fetchBtn;
@@ -25,16 +24,7 @@ public class ItemGUI extends Frame implements ActionListener, WindowListener{
 	
 	public ItemGUI() {
 		setLayout(new FlowLayout());
-		
-		Label itemSlotLabel = new Label("Item Slot:");
-		add(itemSlotLabel);
-		slotList = new Choice();
-		for(int i = 0; i < ITEMSLOTS.length; i++) {
-			slotList.add(ITEMSLOTS[i]);
-		}
-		add(slotList);
-		slotList.select(0);
-		
+				
 		Label itemInputLabel = new Label ("Item name: ");
 		add(itemInputLabel);		
 		itemInput = new TextField("", 30);
@@ -70,11 +60,12 @@ public class ItemGUI extends Frame implements ActionListener, WindowListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		String slot = slotList.getSelectedItem();
+		//String slot = slotList.getSelectedItem();
 		String itemName = itemInput.getText();
 		try {
+			Item i = ItemIDFetch.fetchItem(itemName);
 			int iLevel = Integer.parseInt(iLevelInput.getText());
-			String result = ItemIDFetch.createSimCraftStringForItem(slot, itemName, iLevel);
+			String result = i.createSimCraftStringForItem(iLevel);
 			if (result == null) {
 				outPut.setText("That item couldn't be found");
 			}
