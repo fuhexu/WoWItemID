@@ -62,20 +62,22 @@ public class ItemGUI extends Frame implements ActionListener, WindowListener{
 
 		//String slot = slotList.getSelectedItem();
 		String itemName = itemInput.getText();
-		try {
-			Item i = ItemIDFetch.fetchItem(itemName);
-			int iLevel = Integer.parseInt(iLevelInput.getText());
-			String result = i.createSimCraftStringForItem(iLevel);
-			if (result == null) {
-				outPut.setText("That item couldn't be found");
-			}
-			else {
+		Item i = ItemIDFetch.fetchItem(itemName);
+		if (i == null) {
+			outPut.setText("That item couldn't be found");
+		}
+		else {
+			try {
+				int iLevel = Integer.parseInt(iLevelInput.getText());
+				String result = i.createSimCraftStringForItem(iLevel);
 				outPut.setText(result);
 			}
+			catch(NumberFormatException ex) {
+				outPut.setText("Please enter an integer into the item level field");
+			}
+			
 		}
-		catch(NumberFormatException ex) {
-			outPut.setText("Please enter an integer into the item level field");
-		}
+		
 	}
 
 	@Override
